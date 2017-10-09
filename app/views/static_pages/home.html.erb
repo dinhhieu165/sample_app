@@ -18,5 +18,16 @@
 
     <%= link_to image_tag("rails.png", alt: "Rails logo"),
             'http://rubyonrails.org/', id: "my_image" %>
+
+    <h1>All users</h1>
+
+    <%= will_paginate @users %>
+
+    <ul class="users">
+        <%= render @users  %>
+    </ul>
+
+    <%= will_paginate @users %>
+
   </body>
 </html>
