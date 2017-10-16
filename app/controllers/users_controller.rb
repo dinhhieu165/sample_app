@@ -5,7 +5,8 @@ class UsersController < ApplicationController
   before_action:admin_user, only: :destroy
   def show
     @user = User.find(params[:id])
-    redirect_to root_url and return unless @user.activated?
+    @microposts = @user.microposts.paginate(page: params[:page],per_page: 5)
+    # redirect_to root_url and return unless @user.activated?
   end
 
   def new
@@ -65,6 +66,11 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:name, :email, :phone, :birthday, :gender, :address, :password, :password_comfirmation)
+    end
+
+    def correct_user
+      @user = User.find(params[:id])
+      redirect_to(root_url) unless current_user?(@user)
     end
 
     def admin_user
